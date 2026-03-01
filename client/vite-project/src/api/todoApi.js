@@ -1,17 +1,20 @@
-import axios from "axios";
+import axios from 'axios';
+
+// Check if the app is running in production (Vercel) or locally
+const baseURL = process.env.NODE_ENV === 'production' 
+  ? 'https://to-do-app-56g7.onrender.com'  // Vercel URL
+  : 'http://localhost:5000';  // Local URL
 
 const API = axios.create({
-  baseURL: "http://localhost:5000/api/todos",
+  baseURL: `${baseURL}/api/todos`,
 });
 
-// Get all todos with an optional filter
-export const getTodos = (filter = "All") => API.get("/", { params: { filter } });
+// Your API requests will use this base URL dynamically
 
-// Create todo
+export const getTodos = () => API.get("/");
+
 export const createTodo = (data) => API.post("/", data);
 
-// Update todo
 export const updateTodo = (id, data) => API.put(`/${id}`, data);
 
-// Delete todo
 export const deleteTodo = (id) => API.delete(`/${id}`);
